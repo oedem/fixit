@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Service</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <h1>Upload a Service</h1>
+    <form action="/upload-service" method="POST" enctype="multipart/form-data" novalidate>
+        <label for="service_name">Service Name:</label>
+        <input type="text" id="service_name" name="service_name" required autofocus>
+        <div class="error" id="service_name_error"></div>
+        
+        <label for="service_description">Service Description:</label>
+        <textarea id="service_description" name="service_description" rows="5" cols="30"></textarea>
+        <div class="error" id="service_description_error"></div>
+        
+        <label for="service_file">Upload File:</label>
+        <input type="file" id="service_file" name="service_file" required accept=".pdf, .docx, .doc">
+        <div class="error" id="service_file_error"></div>
+        
+        <button type="submit" id="submit-btn">Upload Service</button>
+        <div class="success" id="upload-success"></div>
+    </form>
+</body>
+</html>
+<script>
+    document.getElementById('submit-btn').addEventListener('click', function(event) {
+        // Clear previous error messages
+        document.getElementById('service_name_error').innerText = '';
+        document.getElementById('service_description_error').innerText = '';
+        document.getElementById('service_file_error').innerText = '';
+        
+        let valid = true;
+    
+        // Validate Service Name
+        const serviceName = document.getElementById('service_name').value;
+        if (!serviceName) {
+            document.getElementById('service_name_error').innerText = 'Service Name is required.';
+            valid = false;
+        }
+    
+        // Validate Service Description
+        const serviceDescription = document.getElementById('service_description').value;
+        if (serviceDescription.length > 500) {
